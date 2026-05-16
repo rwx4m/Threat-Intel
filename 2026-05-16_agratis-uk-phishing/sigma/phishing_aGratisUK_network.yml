@@ -10,7 +10,7 @@ author: rwx4m
 date: 2026/05/16
 modified: 2026/05/16
 references:
-  - https://sudo-rwx4m.my.id/
+  - https://sudo-rwx4m.my.id/projects/TI-Report_Phishing-Network_a-gratis-uk
   - https://api.certspotter.com/v1/issuances?domain=a-gratis.uk&include_subdomains=true
 tags:
   - attack.initial_access
@@ -34,7 +34,7 @@ description: Detects HTTP access to any subdomain of the a-gratis.uk phishing ne
 author: rwx4m
 date: 2026/05/16
 references:
-  - https://sudo-rwx4m.my.id/
+  - https://sudo-rwx4m.my.id/projects/TI-Report_Phishing-Network_a-gratis-uk
 tags:
   - attack.initial_access
   - attack.t1566.002
@@ -72,7 +72,7 @@ description: |
 author: rwx4m
 date: 2026/05/16
 references:
-  - https://sudo-rwx4m.my.id/
+  - https://sudo-rwx4m.my.id/projects/TI-Report_Phishing-Network_a-gratis-uk
 tags:
   - attack.initial_access
   - attack.t1566.002
@@ -112,7 +112,7 @@ description: |
 author: rwx4m
 date: 2026/05/16
 references:
-  - https://sudo-rwx4m.my.id/
+  - https://sudo-rwx4m.my.id/projects/TI-Report_Phishing-Network_a-gratis-uk
 tags:
   - attack.initial_access
   - attack.t1566.002
@@ -145,7 +145,7 @@ description: |
 author: rwx4m
 date: 2026/05/16
 references:
-  - https://sudo-rwx4m.my.id/
+  - https://sudo-rwx4m.my.id/projects/TI-Report_Phishing-Network_a-gratis-uk
 tags:
   - attack.initial_access
   - attack.t1566.002
