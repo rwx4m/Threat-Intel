@@ -1,0 +1,142 @@
+# Snort / Suricata Rules — Phishing Network: a-gratis.uk
+# ========================================================
+# Author    : rwx4m
+# Date      : 2026-05-16
+# Version   : 1.0
+# TLP       : WHITE
+# Reference : https://sudo-rwx4m.my.id/
+#
+# All domains verified HTTP 200 on 2026-05-16.
+# IP addresses are Cloudflare anycast proxies — do NOT use for firewall block.
+# Use domain-based rules (HTTP Host header) for accurate detection.
+# ========================================================
+
+# ── Rule 1: Any subdomain of a-gratis.uk ──────────────────────────────────────
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"PHISHING a-gratis.uk Network — Government Impersonation ID/MY";
+    flow:established,to_server;
+    http.host;
+    content:"a-gratis.uk";
+    endswith;
+    classtype:social-engineering;
+    sid:9000001;
+    rev:1;
+    metadata:
+        affected_products Web_Browser,
+        attack_target Client_Endpoint,
+        created_at 2026_05_16,
+        confidence HIGH,
+        tlp WHITE,
+        author rwx4m;
+)
+
+# ── Rule 2: bansos-terkini — PKH Indonesia ────────────────────────────────────
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"PHISHING bansos-terkini.a-gratis.uk — PKH Kemensos Indonesia Impersonation";
+    flow:established,to_server;
+    http.host;
+    content:"bansos-terkini.a-gratis.uk";
+    endswith;
+    classtype:social-engineering;
+    sid:9000002;
+    rev:1;
+    metadata:
+        affected_products Web_Browser,
+        attack_target Client_Endpoint,
+        created_at 2026_05_16,
+        confidence HIGH,
+        tlp WHITE,
+        author rwx4m;
+)
+
+# ── Rule 3: bantuan-ppr-terkini — PPR Malaysia ───────────────────────────────
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"PHISHING bantuan-ppr-terkini.a-gratis.uk — PPR Malaysia Impersonation";
+    flow:established,to_server;
+    http.host;
+    content:"bantuan-ppr-terkini.a-gratis.uk";
+    endswith;
+    classtype:social-engineering;
+    sid:9000003;
+    rev:1;
+    metadata:
+        affected_products Web_Browser,
+        attack_target Client_Endpoint,
+        created_at 2026_05_16,
+        confidence HIGH,
+        tlp WHITE,
+        author rwx4m;
+)
+
+# ── Rule 4: daftar-segera — Generic Indonesia ─────────────────────────────────
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"PHISHING daftar-segera.a-gratis.uk — Generic Registration Phishing Indonesia";
+    flow:established,to_server;
+    http.host;
+    content:"daftar-segera.a-gratis.uk";
+    endswith;
+    classtype:social-engineering;
+    sid:9000004;
+    rev:1;
+    metadata:
+        affected_products Web_Browser,
+        attack_target Client_Endpoint,
+        created_at 2026_05_16,
+        confidence HIGH,
+        tlp WHITE,
+        author rwx4m;
+)
+
+# ── Rule 5: daftar-segeraa — Backup Indonesia ────────────────────────────────
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"PHISHING daftar-segeraa.a-gratis.uk — Backup Registration Phishing Indonesia";
+    flow:established,to_server;
+    http.host;
+    content:"daftar-segeraa.a-gratis.uk";
+    endswith;
+    classtype:social-engineering;
+    sid:9000005;
+    rev:1;
+    metadata:
+        affected_products Web_Browser,
+        attack_target Client_Endpoint,
+        created_at 2026_05_16,
+        confidence HIGH,
+        tlp WHITE,
+        author rwx4m;
+)
+
+# ── Rule 6: jawatan-kosong-terkini — Job Scam Malaysia ───────────────────────
+alert http $HOME_NET any -> $EXTERNAL_NET any (
+    msg:"PHISHING jawatan-kosong-terkini.a-gratis.uk — Job Scam Malaysia Impersonation";
+    flow:established,to_server;
+    http.host;
+    content:"jawatan-kosong-terkini.a-gratis.uk";
+    endswith;
+    classtype:social-engineering;
+    sid:9000006;
+    rev:1;
+    metadata:
+        affected_products Web_Browser,
+        attack_target Client_Endpoint,
+        created_at 2026_05_16,
+        confidence HIGH,
+        tlp WHITE,
+        author rwx4m;
+)
+
+# ── Rule 7: DNS query detection ───────────────────────────────────────────────
+alert dns $HOME_NET any -> any any (
+    msg:"PHISHING DNS Query — a-gratis.uk Phishing Network";
+    dns.query;
+    content:"a-gratis.uk";
+    endswith;
+    classtype:social-engineering;
+    sid:9000007;
+    rev:1;
+    metadata:
+        created_at 2026_05_16,
+        confidence HIGH,
+        tlp WHITE,
+        author rwx4m;
+)

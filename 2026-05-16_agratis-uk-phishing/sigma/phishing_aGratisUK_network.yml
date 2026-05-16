@@ -1,0 +1,170 @@
+title: Phishing Network a-gratis.uk — Government Impersonation ID/MY
+id: 7f3c2a1b-4d8e-4f6a-9b2c-1e5f8a3d7c09
+status: stable
+description: |
+  Detects HTTP requests to the a-gratis.uk phishing network which impersonates
+  government social benefit programs in Indonesia (PKH Kemensos) and Malaysia
+  (PPR, Jawatan Kosong). All domains confirmed active (HTTP 200) on 2026-05-16.
+  Final objective: Telegram Account Takeover via OTP social engineering.
+author: rwx4m
+date: 2026/05/16
+modified: 2026/05/16
+references:
+  - https://sudo-rwx4m.my.id/
+  - https://api.certspotter.com/v1/issuances?domain=a-gratis.uk&include_subdomains=true
+tags:
+  - attack.initial_access
+  - attack.t1566
+  - attack.t1566.002
+  - attack.credential_access
+  - attack.t1528
+  - attack.defense_evasion
+  - attack.t1036.005
+  - attack.lateral_movement
+  - attack.t1534
+tlp: WHITE
+
+---
+
+# Rule 1 — Proxy/Web Gateway: domain-based detection (highest confidence)
+title: Phishing a-gratis.uk — Domain Access via Proxy
+id: 7f3c2a1b-4d8e-4f6a-9b2c-1e5f8a3d7c09
+status: stable
+description: Detects HTTP access to any subdomain of the a-gratis.uk phishing network via web proxy logs.
+author: rwx4m
+date: 2026/05/16
+references:
+  - https://sudo-rwx4m.my.id/
+tags:
+  - attack.initial_access
+  - attack.t1566.002
+logsource:
+  category: proxy
+  product: web_proxy
+detection:
+  selection:
+    c-uri-host|endswith: 'a-gratis.uk'
+  condition: selection
+falsepositives:
+  - None expected — domain has no known legitimate use
+level: high
+fields:
+  - c-uri-host
+  - c-ip
+  - cs-username
+  - cs-User-Agent
+
+---
+
+# Rule 2 — Proxy/Web Gateway: per-subdomain detection (confirmed active)
+title: Phishing a-gratis.uk — Known Active Subdomains
+id: 8a4d3b2c-5e9f-4a7b-8c1d-2f6e9b4c8d01
+status: stable
+description: |
+  Detects HTTP access to the five confirmed active phishing subdomains
+  under a-gratis.uk. All verified HTTP 200 on 2026-05-16.
+  Subdomains:
+    - bansos-terkini.a-gratis.uk        (PKH Indonesia)
+    - bantuan-ppr-terkini.a-gratis.uk   (PPR Malaysia)
+    - daftar-segera.a-gratis.uk         (Generic Indonesia)
+    - daftar-segeraa.a-gratis.uk        (Backup Indonesia)
+    - jawatan-kosong-terkini.a-gratis.uk (Job Scam Malaysia)
+author: rwx4m
+date: 2026/05/16
+references:
+  - https://sudo-rwx4m.my.id/
+tags:
+  - attack.initial_access
+  - attack.t1566.002
+  - attack.credential_access
+  - attack.t1528
+logsource:
+  category: proxy
+  product: web_proxy
+detection:
+  selection:
+    c-uri-host|contains:
+      - 'bansos-terkini.a-gratis.uk'
+      - 'bantuan-ppr-terkini.a-gratis.uk'
+      - 'daftar-segera.a-gratis.uk'
+      - 'daftar-segeraa.a-gratis.uk'
+      - 'jawatan-kosong-terkini.a-gratis.uk'
+  condition: selection
+falsepositives:
+  - None expected
+level: high
+fields:
+  - c-uri-host
+  - c-ip
+  - cs-username
+  - cs-User-Agent
+
+---
+
+# Rule 3 — DNS: suspicious resolution of a-gratis.uk subdomains
+title: Phishing a-gratis.uk — DNS Resolution of Phishing Subdomain
+id: 9b5e4c3d-6f0a-4b8c-9d2e-3a7f0c5d9e02
+status: stable
+description: |
+  Detects DNS queries resolving to subdomains of a-gratis.uk phishing network.
+  Confirmed nameservers: jeremy.ns.cloudflare.com, georgia.ns.cloudflare.com.
+  DNS TTL: 300s (low TTL — evasion indicator).
+author: rwx4m
+date: 2026/05/16
+references:
+  - https://sudo-rwx4m.my.id/
+tags:
+  - attack.initial_access
+  - attack.t1566.002
+logsource:
+  category: dns
+detection:
+  selection:
+    QueryName|endswith: 'a-gratis.uk'
+  condition: selection
+falsepositives:
+  - None expected
+level: high
+fields:
+  - QueryName
+  - QueryResults
+  - Computer
+
+---
+
+# Rule 4 — Network: Cloudflare proxy IP with phishing host header
+title: Phishing a-gratis.uk — HTTP Request to Cloudflare with Phishing Host Header
+id: 0c6f5d4e-7a1b-4c9d-0e3f-4b8a1d6e0f03
+status: stable
+description: |
+  Detects HTTP/HTTPS connections to Cloudflare proxy IPs (104.21.43.223,
+  172.67.186.183) with a-gratis.uk in the Host header. IPs confirmed via
+  DNS resolution on 2026-05-16.
+  NOTE: These IPs are Cloudflare anycast — do NOT block them at firewall level.
+  Use domain-based blocking instead. This rule is for detection/alerting only.
+author: rwx4m
+date: 2026/05/16
+references:
+  - https://sudo-rwx4m.my.id/
+tags:
+  - attack.initial_access
+  - attack.t1566.002
+logsource:
+  category: network_connection
+  product: zeek
+detection:
+  selection_ip:
+    dst_ip:
+      - '104.21.43.223'
+      - '172.67.186.183'
+  selection_host:
+    http.host|endswith: 'a-gratis.uk'
+  condition: selection_ip and selection_host
+falsepositives:
+  - Other sites hosted on same Cloudflare IPs without a-gratis.uk host header
+level: medium
+fields:
+  - src_ip
+  - dst_ip
+  - http.host
+  - http.uri
