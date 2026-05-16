@@ -2,7 +2,7 @@
 
 Detection rules and IOCs for the **a-gratis.uk phishing network** targeting government social benefit programs in Indonesia and Malaysia.
 
-Full technical report: https://sudo-rwx4m.my.id/projects
+Full technical report: https://sudo-rwx4m.my.id/projects/TI-Report_Phishing-Network_a-gratis-uk
 
 ---
 
@@ -153,4 +153,4 @@ No active exploitation or form submission was performed during investigation.
 
 ---
 
-**Author:** rwx4m | **Date:** 2026-05-16 | **TLP:** WHITE
+**Author:** [rwx4m](https://sudo-rwx4m.my.id) | **Date:** 2026-05-16 | **TLP:** WHITE
