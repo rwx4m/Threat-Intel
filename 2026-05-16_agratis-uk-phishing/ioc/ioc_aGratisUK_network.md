@@ -1,14 +1,14 @@
 # IOC List — Phishing Network: a-gratis.uk
-# Author    : rwx4m
-# Date      : 2026-05-16
-# Version   : 1.0
-# TLP       : WHITE
-# Reference : https://sudo-rwx4m.my.id
-#
-# All IOCs verified via active investigation on 2026-05-16.
-# Sources: DNS resolution (Google DoH), Certificate Transparency log
-#          (certspotter.com), HTTP response headers, source HTML capture.
-# ============================================================
+Author    : rwx4m
+Date      : 2026-05-16
+Version   : 1.0
+TLP       : WHITE
+Reference : [https://sudo-rwx4m.my.id](https://sudo-rwx4m.my.id/projects/TI-Report_Phishing-Network_a-gratis-uk)
+
+All IOCs verified via active investigation on 2026-05-16.
+Sources: DNS resolution (Google DoH), Certificate Transparency log
+          (certspotter.com), HTTP response headers, source HTML capture.
+============================================================
 
 # ── DOMAINS ──────────────────────────────────────────────────────────────────
 # Parent domain
